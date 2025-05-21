@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -60,11 +61,19 @@ public class PoiSearchManager {
                 public void onResponse(Call call, Response response) throws IOException {
                     if (response.isSuccessful() && response.body() != null) {
                         String json = response.body().string();
-                        mainHandler.post(() -> callback.onSuccess(json));
+
+                        try {
+                            List<Poi> poiList = PoiParsingManager.parse(json);  //  여기서 파싱
+                            mainHandler.post(() -> callback.onSuccess(poiList)); //  파싱된 결과 전달
+                        } catch (Exception e) {
+                            mainHandler.post(() -> callback.onFailure("파싱 오류: " + e.getMessage()));
+                        }
+
                     } else {
                         mainHandler.post(() -> callback.onFailure("응답 오류: " + response.code()));
                     }
                 }
+
             });
 
         } catch (Exception e) {
