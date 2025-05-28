@@ -1,4 +1,4 @@
-package com.example.capstone_map;
+package com.example.capstone_map.poi;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.capstone_map;
+package com.example.capstone_map.poi;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -45,36 +45,36 @@ public class PoiSearchManager {
                     .addHeader("appKey", APP_KEY)
                     .build();
 
-            client.newCall(request).enqueue(new Callback() { //콜백함수 정의
-                final Handler mainHandler = new Handler(Looper.getMainLooper()); //
+            client.newCall(request).enqueue(
+                    new Callback() { //콜백함수 정의
+                    final Handler mainHandler = new Handler(Looper.getMainLooper()); //
 
 
-                // 이해가 안간다
-                @Override // OKHTTP의 Callback 함수인데 그걸 Override한거야
-                public void onFailure(Call call, IOException e) {
-                    mainHandler.post(() -> callback.onFailure("요청 실패: " + e.getMessage())); //얘가 백그라운드에서 실행된 정보
-                }
-
-
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    if (response.isSuccessful() && response.body() != null) {
-                        String json = response.body().string();
-
-                        try {
-                            List<Poi> poiList = PoiParsingManager.parse(json);  //  여기서 파싱
-                            mainHandler.post(() -> callback.onSuccess(poiList)); //  파싱된 결과 전달
-                        } catch (Exception e) {
-                            mainHandler.post(() -> callback.onFailure("파싱 오류: " + e.getMessage()));
-                        }
-
-                    } else {
-                        mainHandler.post(() -> callback.onFailure("응답 오류: " + response.code()));
+                    // 이해가 안간다
+                    @Override // 이 아래는 OKHTTP의 Callback 함수인데 그걸 Override한거야
+                    public void onFailure(Call call, IOException e) {
+                        mainHandler.post(() -> callback.onFailure("요청 실패: " + e.getMessage())); //얘가 백그라운드에서 실행된 정보
                     }
-                }
 
-            });
+
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful() && response.body() != null) {
+                            String json = response.body().string();
+
+                            try {
+                                List<Poi> poiList = PoiParsingManager.parse(json);  //  여기서 파싱
+                                mainHandler.post(() -> callback.onSuccess(poiList)); //  파싱된 결과 전달
+                            } catch (Exception e) {
+                                mainHandler.post(() -> callback.onFailure("파싱 오류: " + e.getMessage()));
+                            }
+
+                        } else {
+                            mainHandler.post(() -> callback.onFailure("응답 오류: " + response.code()));
+                        }
+                    }
+                });
 
         } catch (Exception e) {
             callback.onFailure("에러: " + e.getMessage());
