@@ -1,4 +1,4 @@
-package com.example.capstone_map;
+package com.example.capstone_map.poi;
 
 public class Poi {
     private String name;           // 장소 이름

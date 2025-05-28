@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.capstone_map.route.RouteHelper;
 import com.skt.Tmap.TMapView;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
         // ④ TMapView를 레이아웃에 붙이기
         mapLayout.addView(tMapView);
+
+
+        RouteHelper.drawWalkingRoute(
+                tMapView,                 // 지도 객체
+                126.9780, 37.5665,        // 출발지: 서울시청
+                "서울시청",
+                126.9827, 37.5700,        // 도착지: 광화문
+                "광화문"
+        );
+
 
 
 
