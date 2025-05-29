@@ -67,4 +67,33 @@ public class RouteJsonParser {
         }
         return descriptions;
     }
+
+
+    // 총 거리와 시간 파싱
+    public static RouteSummary parseSummary(JSONObject json) throws JSONException {
+        JSONArray features = json.getJSONArray("features");
+
+        for (int i = 0; i < features.length(); i++) {
+            JSONObject feature = features.getJSONObject(i);
+            JSONObject properties = feature.optJSONObject("properties");
+
+            if (properties != null && "SP".equals(properties.optString("pointType"))) {
+                int distance = properties.optInt("totalDistance", 0); // 단위: m
+                int time = properties.optInt("totalTime", 0); // 단위: 초
+                return new RouteSummary(distance, time);
+            }
+        }
+
+        return new RouteSummary(0, 0); // 기본값
+    }
+
+    public static class RouteSummary {
+        public final int totalDistance;
+        public final int totalTime;
+
+        public RouteSummary(int totalDistance, int totalTime) {
+            this.totalDistance = totalDistance;
+            this.totalTime = totalTime;
+        }
+    }
 }
