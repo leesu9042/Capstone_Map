@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +9,21 @@
     <LinearLayout
         android:id="@+id/linearLayoutTmap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical" />
+
+    <Button
+        android:id="@+id/stt_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🎤 말하기 시작" />
+
+    <TextView
+        android:id="@+id/result_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="결과가 표시됩니다"
+        android:textSize="18sp" />
 
 </LinearLayout>
