@@ -1,4 +1,4 @@
-package com.example.capstone_map.navigation;
+package com.example.capstone_map.location;
 
 import android.Manifest;
 import android.content.Context;

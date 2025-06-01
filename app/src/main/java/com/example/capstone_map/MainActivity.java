@@ -9,13 +9,9 @@ import android.Manifest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.capstone_map.navigation.LocationAutoMover;
-import com.example.capstone_map.navigation.LocationToMapBinder;
-import com.example.capstone_map.route.RouteHelper;
+import com.example.capstone_map.map.LocationAutoMover;
+import com.example.capstone_map.map.LocationToMapBinder;
 import com.skt.Tmap.TMapView;
 
 public class MainActivity extends AppCompatActivity {
