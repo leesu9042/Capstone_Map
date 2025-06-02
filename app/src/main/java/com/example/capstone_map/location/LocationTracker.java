@@ -1,5 +1,5 @@
 // LocationTracker.java
-package com.example.capstone_map.navigation;
+package com.example.capstone_map.location;
 
 import android.Manifest;
 import android.content.Context;
@@ -67,10 +67,18 @@ public class LocationTracker implements LocationListener { //LocationListener를
         }
 
        /**
+        * GPS 리스너 등록
+        *
         * GPS와 네트워크 둘 다 이용해서 위치를 받아오기 시작합니다.
+        *
         * 설정한 간격(2초, 1m 이상 움직임)에 따라 onLocationChanged()가 호출됩니다.
+        *
+        * “GPS 쓰고 싶고요,
+        * 2초마다 또는 1m 이상 움직이면 알려주세요!
+        * 알려줄 땐 이 클래스(this)의 onLocationChanged()를 자동으로 호출해주세요~”
        * */
 
+       //
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 LOCATION_UPDATE_INTERVAL, LOCATION_UPDATE_DISTANCE, this);
 

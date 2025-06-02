@@ -23,7 +23,7 @@ public class PoiSearchManager {
     private static final OkHttpClient client = new OkHttpClient();
 
 
-    public static void searchPois(String keyword, double lat, double lon,PoiSearchCallback callback) {
+    public static void searchPois(String keyword, double userLat, double UserLon,PoiSearchCallback callback) {
         try {
             String encodedKeyword = URLEncoder.encode(keyword, "UTF-8"); //utf8로 인코딩
 
@@ -32,8 +32,8 @@ public class PoiSearchManager {
                     + "&searchKeyword=" + encodedKeyword
                     + "&searchType=all"
                     + "&searchtypCd=R" // 거리순 정렬 (기본값은 A)
-                    + "&centerLat=" +lat // 얘네는 검색할때 기준 좌표를 말하는건데 이건 현재 사용자 위치를 중심으로 개발해야한다. 지금은 일단 이렇게만해놓자
-                    + "&centerLon=" + lon
+                    + "&centerLat=" +userLat // 얘네는 검색할때 기준 좌표를 말하는건데 이건 현재 사용자 위치를 중심으로 개발해야한다. 지금은 일단 이렇게만해놓자
+                    + "&centerLon=" + UserLon
                     + "&radius=2"
                     + "&resCoordType=WGS84GEO"
                     + "&reqCoordType=WGS84GEO"

@@ -26,6 +26,8 @@ public class PoiParsingManager {
         for (int i = 0; i < poiArray.length(); i++) {
             JSONObject poiItem = poiArray.getJSONObject(i);
 
+
+            //이름 + lat , lon 추출
             String name = poiItem.optString("name", "");
             double lat = poiItem.optDouble("noorLat", 0);
             double lon = poiItem.optDouble("noorLon", 0);
