@@ -1,4 +1,4 @@
-package com.example.capstone_map;
+package com.example.capstone_map.location;
 
 import android.Manifest;
 import android.app.Activity;
@@ -29,9 +29,7 @@ public class CurrentLocationProvider {
     private final ActivityResultLauncher<String> permissionLauncher;
 
 
-    public interface LocationResultListener {
-        void onLocationResult(Location location);
-    }
+
 
     public CurrentLocationProvider(Activity activity, ActivityResultLauncher<String> permissionLauncher) {
         this.activity = activity;
