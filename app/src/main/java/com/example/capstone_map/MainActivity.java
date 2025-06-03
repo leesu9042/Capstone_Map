@@ -24,6 +24,8 @@ import com.example.capstone_map.poi.Poi;
 import com.example.capstone_map.poi.PoiSearchCallback;
 import com.example.capstone_map.poi.PoiSearchManager;
 import com.example.capstone_map.route.RouteLineDrawer;
+import com.example.capstone_map.voice.STTManager;
+import com.example.capstone_map.voice.TTSManager;
 import com.skt.Tmap.TMapView;
 
 import java.util.List;
