@@ -1,4 +1,4 @@
-package com.example.capstone_map;
+package com.example.capstone_map.voice;
 
 import android.app.Activity;
 import android.content.Intent;
