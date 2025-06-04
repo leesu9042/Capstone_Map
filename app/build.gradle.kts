@@ -1,10 +1,18 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android") version "1.9.0"
+
 }
+
 
 android {
     namespace = "com.example.capstone_map"
     compileSdk = 34
+
+
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/java")
+    }
 
     defaultConfig {
         applicationId = "com.example.capstone_map"
@@ -26,12 +34,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 
 dependencies {
+
+    // ViewModel + LiveData + lifecycle
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation ("androidx.activity:activity-ktx:1.7.2") // ← 이것이 핵심!
 
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
