@@ -1,36 +1,90 @@
 package com.example.capstone_map.ui.state
 
+import com.example.capstone_map.viewmodel.DestinationViewModel
+
 sealed interface NavigationState {
+    fun handle(viewModel: DestinationViewModel) {} // 상태 진입 시 실행
+    fun onClick(viewModel: DestinationViewModel) {} // 버튼 눌렀을 때
 
-    // 1단계: 목적지 입력
-    object AwaitingDestinationInput : NavigationState // 목적지 입력 대기 중
-    object ListeningForDestination : NavigationState  // 목적지 음성 인식 중
+    fun onLongClick(viewModel: DestinationViewModel) {}
 
-    object ConfirmingDestination : NavigationState    // 목적지 확인 중
-    object FetchingCandidates : NavigationState       // 목적지 후보지 검색 중
-    object InputError : NavigationState               // 입력 오류 발생
 
-    // 2단계: 후보지 탐색
-    data class ShowingCandidate(val index: Int, val name: String) : NavigationState // 후보지 표시 중 (현재 인덱스, 이름)
-    object NoCandidatesFound : NavigationState        // 후보지를 찾을 수 없음
-    object FetchingAdditionalCandidates : NavigationState // 추가 후보지 검색 중
+}
 
-    // 3단계: 길안내 진행
-    object StartNavigationPreparation : NavigationState // 길안내 시작 준비 중
-    data class AligningDirection(val degreeOffset: Float) : NavigationState // 방향 정렬 안내 중 (현재 각도 오프셋)
-    object AnnounceRouteSummary : NavigationState     // 경로 요약 안내 중
-    object GuidingNavigation : NavigationState        // 길안내 진행 중
-    object RouteRecalculationInProgress : NavigationState // 경로 재탐색 진행 중
-    object RouteRecalculationSuccess : NavigationState // 경로 재탐색 성공
-    object RouteRecalculationFailed : NavigationState // 경로 재탐색 실패
+// 1단계: 목적지 요청
+object AwaitingDestinationInput : NavigationState {
+    override fun handle(viewModel: DestinationViewModel) {
+        viewModel.speak("버튼을 눌러 목적지를 말씀해주세요")
+        // 버튼 누를 때까지 대기
+    }
 
-    // 4단계: 도착 및 종료
-    object ArrivedAtDestination : NavigationState     // 목적지 도착
-    object ReturningToMainScreen : NavigationState    // 메인 화면으로 복귀 중
+    override fun onClick(viewModel: DestinationViewModel) {
 
-    // 예외 및 이벤트성 상태
-    object DirectionCorrectionRequired : NavigationState // 방향 수정 필요
-    object ObstacleDetectionActive : NavigationState  // 장애물 감지 활성화
-    object ObstacleDetectionCancelled : NavigationState // 장애물 감지 취소
-    object NavigationCancelled : NavigationState      // 길안내 취소됨
+        //listening상태로 바꾸는 함수로
+        viewModel.startListeningForDestination()
+
+    }
+}
+
+
+// 2단계: 목적지 듣기
+object ListeningForDestination : NavigationState {
+    override fun handle(viewModel: DestinationViewModel) {
+        viewModel.listenToDestination() //목적지를 들어
+        //STT 실행후 목적지 text를 stateViewmodel에 저장
+    }
+}
+
+// 3단계: 확인 요청
+object AskingDestinationConfirmation : NavigationState {
+    override fun handle(viewModel: DestinationViewModel) {
+        val destination = viewModel.getDestinationText()
+        viewModel.speak("말씀하신 목적지는 $destination 맞나요? 맞다면 버튼 클락 , 아니면 버튼을 꾹 눌러주세요")
+        TODO("버튼 -> 제스쳐로 바꿔야한다.")
+        // 이 후 판단은 버튼 누름에 따라 수행
+    }
+    override fun onClick(viewModel: DestinationViewModel) { //해당 목적지가 맞아요
+        viewModel.confirmDestination()
+        //상태를 confirm에서 확정(Right)으로 바꾸고
+    }
+
+    override fun onLongClick(viewModel: DestinationViewModel) { //해당 목적지가 아니에요
+        viewModel.denyDestination()
+        // 저장되어있는 목적지를 지우고
+        //상태를 wrong으로 바꿈
+    }
+}
+
+//4-1 해당 목적지가 맞아요
+
+object DestinationRight : NavigationState {
+    override fun handle(viewModel: DestinationViewModel) {
+        //상태를 후보지검색으로 변경하고 , 목적지를 확정함
+        //함수적는곳
+        viewModel.fetchingCandidates()
+    }
+
+
+}
+
+
+// 4-2 목적지 틀렸을 경우
+object DestinationWrong : NavigationState {
+    override fun handle(viewModel: DestinationViewModel) {
+        viewModel.speak("다시 말씀해주세요.") {
+            //함수적는곳
+            viewModel.restartDestinationInput()
+        }
+    }
+}
+
+// 2 . 목적지 검색
+//
+object SearchingDestination :  NavigationState{
+    override fun handle(viewModel: DestinationViewModel){
+        //viewModel.searchDestination()
+        TODO("여기부터 이어서 기능 추가해야함")
+    }
+
+
 }
