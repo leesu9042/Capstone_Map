@@ -35,8 +35,7 @@ object ListeningForDestination : NavigationState {
 object AskingDestinationConfirmation : NavigationState {
     override fun handle(viewModel: DestinationViewModel) {
         val destination = viewModel.getDestinationText()
-        viewModel.speak("말씀하신 목적지는 $destination 맞나요? 맞다면 버튼 클락 , 아니면 버튼을 꾹 눌러주세요")
-        TODO("버튼 -> 제스쳐로 바꿔야한다.")
+        viewModel.speak("말씀하신 목적지는 $destination 맞나요? 맞다면 제스쳐1 , 아니면 제스쳐2")
         // 이 후 판단은 버튼 누름에 따라 수행
     }
     override fun onPrimaryInput(viewModel: DestinationViewModel) { //해당 목적지가 맞아요
