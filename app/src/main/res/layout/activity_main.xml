@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.capstone_map.MainActivity">
+    tools:context="com.example.capstone_map.ui.NavigationActivity">
 
     <LinearLayout
         android:id="@+id/linearLayoutTmap"
