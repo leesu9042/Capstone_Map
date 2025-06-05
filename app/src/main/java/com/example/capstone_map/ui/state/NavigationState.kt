@@ -2,23 +2,19 @@ package com.example.capstone_map.ui.state
 
 import com.example.capstone_map.viewmodel.DestinationViewModel
 
-sealed interface NavigationState {
-    fun handle(viewModel: DestinationViewModel) {} // 상태 진입 시 실행
-    fun onClick(viewModel: DestinationViewModel) {} // 버튼 눌렀을 때
-
-    fun onLongClick(viewModel: DestinationViewModel) {}
+sealed interface NavigationState : BaseState<DestinationViewModel>
 
 
-}
 
 // 1단계: 목적지 요청
 object AwaitingDestinationInput : NavigationState {
     override fun handle(viewModel: DestinationViewModel) {
         viewModel.speak("버튼을 눌러 목적지를 말씀해주세요")
         // 버튼 누를 때까지 대기
+
     }
 
-    override fun onClick(viewModel: DestinationViewModel) {
+    override fun onPrimaryInput(viewModel: DestinationViewModel) {
 
         //listening상태로 바꾸는 함수로
         viewModel.startListeningForDestination()
@@ -43,12 +39,12 @@ object AskingDestinationConfirmation : NavigationState {
         TODO("버튼 -> 제스쳐로 바꿔야한다.")
         // 이 후 판단은 버튼 누름에 따라 수행
     }
-    override fun onClick(viewModel: DestinationViewModel) { //해당 목적지가 맞아요
+    override fun onPrimaryInput(viewModel: DestinationViewModel) { //해당 목적지가 맞아요
         viewModel.confirmDestination()
         //상태를 confirm에서 확정(Right)으로 바꾸고
     }
 
-    override fun onLongClick(viewModel: DestinationViewModel) { //해당 목적지가 아니에요
+    override fun onSecondaryInput(viewModel: DestinationViewModel) { //해당 목적지가 아니에요
         viewModel.denyDestination()
         // 저장되어있는 목적지를 지우고
         //상태를 wrong으로 바꿈
