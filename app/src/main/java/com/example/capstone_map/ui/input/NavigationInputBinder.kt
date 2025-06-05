@@ -5,23 +5,26 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_map.viewmodel.DestinationViewModel
 import com.example.capstone_map.voice.STTManager
 
-object NavigationInputBinder {
+fun NavigationInputBinder(
+    activity: AppCompatActivity,
+    desViewModel: DestinationViewModel,
+    primaryButtonId: Int,
+    secondaryButtonId: Int,
+    tertiaryButtonId: Int
+) {
+    val primary = activity.findViewById<View>(primaryButtonId)
+    val secondary = activity.findViewById<View>(secondaryButtonId)
+    val tertiary = activity.findViewById<View>(tertiaryButtonId)
 
-    fun bindClickAndLongPress(
-        activity: AppCompatActivity,
-        desViewModel: DestinationViewModel,
-        sttManager: STTManager,
-        buttonId: Int
-    ) {
-        val triggerButton = activity.findViewById<View>(buttonId)
+    primary.setOnClickListener {
+        desViewModel.getCurrentState()?.onPrimaryInput(desViewModel)
+    }
 
-        triggerButton.setOnClickListener {
-            desViewModel.getCurrentState()?.onClick(desViewModel)
-        }
+    secondary.setOnClickListener {
+        desViewModel.getCurrentState()?.onSecondaryInput(desViewModel)
+    }
 
-        triggerButton.setOnLongClickListener {
-            desViewModel.getCurrentState()?.onLongClick(desViewModel)
-            true
-        }
+    tertiary.setOnClickListener {
+        desViewModel.getCurrentState()?.onTertiaryInput(desViewModel)
     }
 }
