@@ -1,43 +1,57 @@
 package com.example.capstone_map.viewmodel
 
 
+import android.app.Activity
 import com.example.capstone_map.voice.*
 
 
-
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.example.capstone_map.location.LocationFetcher
+import com.google.android.gms.location.LocationServices
 import kotlin.reflect.KClass
 
 class NavigationAssembler(
-    private val context: Context,
+    private val activity: Activity,
     private val owner: ViewModelStoreOwner
 ) {
 
-    
+
+
     // 공통 상태를 가지는 뷰모델
     val stateViewModel: NavigationStateViewModel by lazy {
         ViewModelProvider(owner)[NavigationStateViewModel::class.java]
     }
 
-    private val _ttsManager: TTSManager by lazy { TTSManager(context) }
-    private val _sttManager: STTManager by lazy { STTManager(context) }
+    private val _ttsManager: TTSManager by lazy { TTSManager(activity) }
+    private val _sttManager: STTManager by lazy { STTManager(activity) }
 
     val ttsManager: TTSManager get() = _ttsManager
     val sttManager: STTManager get() = _sttManager
 
+    private val _locationFetcher: LocationFetcher by lazy {
+        LocationFetcher(activity, LocationServices.getFusedLocationProviderClient(activity))
+    }
+
+
+    /**
+     * ("이코드가 뭔지 나중에 제대로 공부하자 ")
+     */
     // ViewModel 팩토리 모음 (확장 쉽게)
     private val factoryMap: Map<KClass<out ViewModel>, ViewModelProvider.Factory> = mapOf(
         DestinationViewModel::class to DestinationViewModelFactory(stateViewModel, ttsManager, sttManager),
         //ConfirmationViewModel::class to ConfirmationViewModelFactory(stateViewModel, ttsManager)
+        POISearchViewModel::class to POISearchViewModelFactory(stateViewModel, _locationFetcher)
+
+
     )
 
 
     // generic하게 ViewModel을 가져오는 함수
     @Suppress("UNCHECKED_CAST")
     fun <T : ViewModel> getViewModel(vmClass: KClass<T>): T {
+        //("이코드가 뭔지 나중에 제대로 공부하자 ")
         val factory = factoryMap[vmClass] ?: throw IllegalArgumentException("Factory not found")
         return ViewModelProvider(owner, factory)[vmClass.java]
     }
@@ -50,6 +64,11 @@ class NavigationAssembler(
         getViewModel(DestinationViewModel::class)
     }
 
+    val poiSearchViewModel: POISearchViewModel by lazy {
+        getViewModel(POISearchViewModel::class)
+    }
+
+
 //    val confirmationViewModel: ConfirmationViewModel by lazy {
 //        getViewModel(ConfirmationViewModel::class)
 //    }
@@ -59,9 +78,11 @@ class NavigationAssembler(
 }
 
 
-
-
-//✅ NavigationAssembler란?
-//"여러 개의 객체(ViewModel, Manager 등)를 한 번에 묶어서 초기화하고,
-//그걸 외부에서 간단하게 꺼내 쓸 수 있게 만들어주는 조립기(assembler)"
-
+//
+//여러 개의 객체(TTS, STT, LocationFetcher, ViewModel 등)를 한 번에 초기화.
+//
+//stateViewModel을 공통 상태로 관리하여 다른 ViewModel들이 공유하도록 연결.
+//
+//ViewModel을 팩토리로 생성해서 DI 구조 유지.
+//
+//외부에서는 assembler.destinationViewModel, assembler.poiSearchViewModel처럼 간단하게 사용 가능.
