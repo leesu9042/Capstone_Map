@@ -21,6 +21,7 @@ class NavigationActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main) //layout 설정
         val layout = findViewById<LinearLayout>(R.id.linearLayoutTmap)
@@ -36,14 +37,14 @@ class NavigationActivity : AppCompatActivity() {
         destinationViewModel.updateState(AwaitingDestinationInput)
 
 
-
-        NavigationInputBinder.bindClickAndLongPress(
+        // 버튼1개 바인딩 -> 버튼 3개 바인딩
+        NavigationInputBinder(
             activity = this,
             desViewModel = destinationViewModel,
-            sttManager = sttManager,
-            buttonId = R.id.stt_button
+            primaryButtonId = R.id.gesture1,
+            secondaryButtonId = R.id.gesture2,
+            tertiaryButtonId = R.id.gesture3
         )
-
 
 
 
