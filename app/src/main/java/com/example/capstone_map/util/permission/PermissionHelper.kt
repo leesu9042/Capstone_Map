@@ -8,26 +8,44 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.activity.ComponentActivity // ✅ 이것만 사용
 import androidx.core.content.ContextCompat
 
 // PermissionHelper.java
 
 
+fun interface PermissionResultCallback {
+    fun onResult(granted: Boolean)
+}
 object PermissionHelper {
     private const val REQUEST_MIC_PERMISSION = 1000
-    fun requestMicrophonePermission(activity: Activity?) {
-        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO)
+
+    fun requestMicrophonePermission(activity: Activity) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO)
             != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                activity, arrayOf(Manifest.permission.RECORD_AUDIO),
+                activity,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
                 REQUEST_MIC_PERMISSION
             )
         }
     }
 
 
+    fun registerLocationPermissionLauncher(
+        activity: ComponentActivity,
+        callback: PermissionResultCallback
+    ): ActivityResultLauncher<String> {
+        return activity.registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            callback.onResult(isGranted)
+        }
+    }
 
 
 
