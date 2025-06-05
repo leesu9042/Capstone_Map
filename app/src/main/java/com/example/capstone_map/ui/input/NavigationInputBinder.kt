@@ -1,27 +1,27 @@
-package com.example.capstone_map.input
+package com.example.capstone_map.ui.input
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.capstone_map.action.NavigationStateActionHandler
-import com.example.capstone_map.viewmodel.InputViewModel
+import com.example.capstone_map.viewmodel.DestinationViewModel
 import com.example.capstone_map.voice.STTManager
 
 object NavigationInputBinder {
 
     fun bindClickAndLongPress(
         activity: AppCompatActivity,
-        viewModel: InputViewModel,
+        desViewModel: DestinationViewModel,
         sttManager: STTManager,
         buttonId: Int
     ) {
         val triggerButton = activity.findViewById<View>(buttonId)
 
         triggerButton.setOnClickListener {
-            NavigationStateActionHandler.handle(viewModel.navState.value, viewModel, sttManager)
+            desViewModel.getCurrentState()?.onClick(desViewModel)
         }
 
         triggerButton.setOnLongClickListener {
-            NavigationStateActionHandler.handleLongPress(viewModel.navState.value, viewModel, sttManager)
+            desViewModel.getCurrentState()?.onLongClick(desViewModel)
+            true
         }
     }
 }
