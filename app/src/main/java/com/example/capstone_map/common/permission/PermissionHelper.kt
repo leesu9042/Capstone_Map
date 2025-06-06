@@ -1,4 +1,4 @@
-package com.example.capstone_map.util.permission
+package com.example.capstone_map.common.permission
 
 import android.Manifest
 import android.app.Activity
