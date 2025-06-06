@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.capstone_map.MainActivity">
+    tools:context="com.example.capstone_map.feature.NavigationActivity">
 
+    <!-- 위쪽 영역: 지도 또는 메인 콘텐츠 -->
     <LinearLayout
         android:id="@+id/linearLayoutTmap"
         android:layout_width="match_parent"
@@ -13,17 +14,43 @@
         android:layout_weight="1"
         android:orientation="vertical" />
 
-    <Button
-        android:id="@+id/stt_button"
+    <!-- 아래쪽: 버튼들 작게 배치 -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🎤 말하기 시작" />
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/gesture1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="제스쳐1" />
+
+        <Button
+            android:id="@+id/gesture2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="제스쳐2" />
+
+        <Button
+            android:id="@+id/gesture3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="제스쳐3" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/result_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="결과가 표시됩니다"
-        android:textSize="18sp" />
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:gravity="center_horizontal" />
 
 </LinearLayout>
