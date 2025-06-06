@@ -1,4 +1,4 @@
-package com.example.capstone_map.ui.state
+package com.example.capstone_map.common.state
 
 interface BaseState<VM> {
     fun handle(viewModel: VM) {}
