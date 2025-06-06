@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.capstone_map.ui.NavigationActivity">
+    tools:context="com.example.capstone_map.feature.NavigationActivity">
 
     <!-- 위쪽 영역: 지도 또는 메인 콘텐츠 -->
     <LinearLayout

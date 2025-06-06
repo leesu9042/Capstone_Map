@@ -1,14 +1,14 @@
-package com.example.capstone_map.ui
+package com.example.capstone_map.feature
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_map.R
-import com.example.capstone_map.ui.input.NavigationInputBinder
-import com.example.capstone_map.ui.state.AwaitingDestinationInput
-import com.example.capstone_map.util.permission.PermissionHelper
-import com.example.capstone_map.viewmodel.NavigationAssembler
-import com.example.capstone_map.voice.STTManager
-import com.example.capstone_map.voice.TTSManager
+import com.example.capstone_map.common.input.NavigationInputBinder
+import com.example.capstone_map.feature.destination.state.AwaitingDestinationInput
+import com.example.capstone_map.common.permission.PermissionHelper
+import com.example.capstone_map.common.di.NavigationAssembler
+import com.example.capstone_map.common.voice.STTManager
+import com.example.capstone_map.common.voice.TTSManager
 
 class NavigationActivity : AppCompatActivity() {
 
@@ -37,15 +37,15 @@ class NavigationActivity : AppCompatActivity() {
         destinationViewModel.updateState(AwaitingDestinationInput)
 
 
-        // 버튼1개 바인딩 -> 버튼 3개 바인딩
         NavigationInputBinder(
             activity = this,
             desViewModel = destinationViewModel,
+            poiViewModel = assembler.poiSearchViewModel,           //
+            stateProvider = { assembler.stateViewModel.navState.value }, // ? a
             primaryButtonId = R.id.gesture1,
             secondaryButtonId = R.id.gesture2,
             tertiaryButtonId = R.id.gesture3
         )
-
 
 
     }
