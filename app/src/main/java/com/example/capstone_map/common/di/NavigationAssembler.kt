@@ -1,14 +1,20 @@
-package com.example.capstone_map.viewmodel
+package com.example.capstone_map.common.di
 
 
 import android.app.Activity
-import com.example.capstone_map.voice.*
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.example.capstone_map.location.LocationFetcher
+import com.example.capstone_map.feature.destination.viewmodel.DestinationViewModel
+import com.example.capstone_map.feature.destination.viewmodel.factory.DestinationViewModelFactory
+import com.example.capstone_map.feature.poisearch.viewmodel.POISearchViewModel
+import com.example.capstone_map.feature.poisearch.viewmodel.factory.POISearchViewModelFactory
+import com.example.capstone_map.common.location.LocationFetcher
+import com.example.capstone_map.common.viewmodel.NavigationStateViewModel
+import com.example.capstone_map.common.voice.STTManager
+import com.example.capstone_map.common.voice.TTSManager
 import com.google.android.gms.location.LocationServices
 import kotlin.reflect.KClass
 
@@ -24,8 +30,16 @@ class NavigationAssembler(
         ViewModelProvider(owner)[NavigationStateViewModel::class.java]
     }
 
-    private val _ttsManager: TTSManager by lazy { TTSManager(activity) }
-    private val _sttManager: STTManager by lazy { STTManager(activity) }
+    private val _ttsManager: TTSManager by lazy {
+        TTSManager(
+            activity
+        )
+    }
+    private val _sttManager: STTManager by lazy {
+        STTManager(
+            activity
+        )
+    }
 
     val ttsManager: TTSManager get() = _ttsManager
     val sttManager: STTManager get() = _sttManager
@@ -40,9 +54,17 @@ class NavigationAssembler(
      */
     // ViewModel 팩토리 모음 (확장 쉽게)
     private val factoryMap: Map<KClass<out ViewModel>, ViewModelProvider.Factory> = mapOf(
-        DestinationViewModel::class to DestinationViewModelFactory(stateViewModel, ttsManager, sttManager),
-        //ConfirmationViewModel::class to ConfirmationViewModelFactory(stateViewModel, ttsManager)
-        POISearchViewModel::class to POISearchViewModelFactory(stateViewModel, _locationFetcher)
+
+        POISearchViewModel::class to POISearchViewModelFactory(stateViewModel, _locationFetcher,ttsManager,sttManager),
+
+        // 그 다음 DestinationViewModel에 주입
+        DestinationViewModel::class to DestinationViewModelFactory(
+            stateViewModel,
+            getViewModel(POISearchViewModel::class),
+            ttsManager,
+            sttManager
+        )
+
 
 
     )
