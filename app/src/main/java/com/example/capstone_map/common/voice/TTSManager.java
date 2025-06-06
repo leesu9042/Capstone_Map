@@ -1,4 +1,4 @@
-package com.example.capstone_map.voice;
+package com.example.capstone_map.common.voice;
 
 import android.content.Context;
 import android.os.Handler;
