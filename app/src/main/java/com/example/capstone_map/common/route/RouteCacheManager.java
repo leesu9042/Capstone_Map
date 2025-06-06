@@ -1,7 +1,4 @@
-package com.example.capstone_map.route;
-
-import com.example.capstone_map.route.JsonCallback;
-import com.example.capstone_map.route.PedestrianRouteRequester;
+package com.example.capstone_map.common.route;
 
 import org.json.JSONObject;
 

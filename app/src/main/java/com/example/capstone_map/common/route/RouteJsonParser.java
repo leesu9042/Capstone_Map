@@ -1,4 +1,4 @@
-package com.example.capstone_map.route;
+package com.example.capstone_map.common.route;
 
 import com.skt.Tmap.TMapPoint;
 
