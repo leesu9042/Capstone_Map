@@ -1,8 +1,8 @@
-package com.example.capstone_map.poi;
+package com.example.capstone_map.common.poi;
 
 import java.util.List;
 
 public interface PoiSearchCallback {
-    void onSuccess(List<Poi> poiList);
+    void onSuccess(String geoJson);
     void onFailure(String errorMessage);
 }
