@@ -45,6 +45,8 @@ android {
 
 dependencies {
 
+
+    implementation ("com.google.code.gson:gson:2.13.1") // GSon 라이브러리 추가   JSON파싱 라이브러리
     // ViewModel + LiveData + lifecycle
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.activity:activity-ktx:1.7.2") // ← 이것이 핵심!
