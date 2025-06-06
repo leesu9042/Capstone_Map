@@ -1,6 +1,4 @@
-package com.example.capstone_map.route;
-
-import com.example.capstone_map.route.JsonCallback;
+package com.example.capstone_map.common.route;
 
 import org.json.JSONException;
 import org.json.JSONObject;
