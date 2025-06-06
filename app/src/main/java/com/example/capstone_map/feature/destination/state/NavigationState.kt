@@ -1,6 +1,7 @@
-package com.example.capstone_map.ui.state
+package com.example.capstone_map.feature.destination.state
 
-import com.example.capstone_map.viewmodel.DestinationViewModel
+import com.example.capstone_map.feature.destination.viewmodel.DestinationViewModel
+import com.example.capstone_map.common.state.BaseState
 
 sealed interface NavigationState : BaseState<DestinationViewModel>
 
@@ -75,10 +76,10 @@ object DestinationWrong : NavigationState {
 
 // 2 . 목적지 검색
 //
-object SearchingDestination :  NavigationState{
+object SearchingDestination : NavigationState {
     override fun handle(viewModel: DestinationViewModel){
         //viewModel.searchDestination()
-        TODO("여기부터 이어서 기능 추가해야함")
+        viewModel.fetchCurrentLocation()
     }
 
 
