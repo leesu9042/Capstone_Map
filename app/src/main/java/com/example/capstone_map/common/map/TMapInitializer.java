@@ -1,4 +1,4 @@
-package com.example.capstone_map.map;
+package com.example.capstone_map.common.map;
 
 // TMapInitializer.java
 
