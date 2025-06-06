@@ -1,14 +1,25 @@
-package com.example.capstone_map.viewmodel
+package com.example.capstone_map.feature.destination.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.capstone_map.ui.state.NavigationState
-import com.example.capstone_map.voice.STTManager
-import com.example.capstone_map.voice.TTSManager
+import com.example.capstone_map.feature.destination.state.AskingDestinationConfirmation
+import com.example.capstone_map.feature.destination.state.AwaitingDestinationInput
+import com.example.capstone_map.feature.destination.state.DestinationRight
+import com.example.capstone_map.feature.destination.state.DestinationWrong
+import com.example.capstone_map.feature.destination.state.ListeningForDestination
+import com.example.capstone_map.feature.destination.state.NavigationState
+import com.example.capstone_map.feature.destination.state.SearchingDestination
+import com.example.capstone_map.feature.poisearch.state.POISearchState
+import com.example.capstone_map.feature.poisearch.state.StartingSearch
 
-import com.example.capstone_map.ui.state.*
+import com.example.capstone_map.common.voice.STTManager
+import com.example.capstone_map.common.voice.TTSManager
+
+import com.example.capstone_map.common.viewmodel.NavigationStateViewModel
+import com.example.capstone_map.feature.poisearch.viewmodel.POISearchViewModel
 
 class DestinationViewModel(
     private val stateViewModel: NavigationStateViewModel,
+    private val poiSearchViewModel: POISearchViewModel, // ✅ 이거 추가
     private val ttsManager: TTSManager,
     private val sttManager: STTManager
 ) : ViewModel() {
@@ -27,12 +38,9 @@ class DestinationViewModel(
             }
         })
     }
-
-    fun getCurrentState(): NavigationState? {
-        return stateViewModel.navState.value
-
+    fun getCurrentPOISearchState(): POISearchState? {
+        return stateViewModel.navState.value as? POISearchState
     }
-
 
     fun getTTSManager(): TTSManager = ttsManager
     fun getSTTManager(): STTManager = sttManager
@@ -69,11 +77,12 @@ class DestinationViewModel(
 
 //3단계 목적지 확인
     fun confirmDestination() {
+
         updateState(DestinationRight)
     }
 
     fun denyDestination() {
-        stateViewModel.destinationText.value = "" // 이게맞냐?
+        stateViewModel.destinationText.postValue("")  // 이게맞냐? 애매한 백그라운드 처리
         updateState(DestinationWrong)
     }
 
@@ -89,6 +98,12 @@ class DestinationViewModel(
         updateState(AwaitingDestinationInput)
     }
 
+
+    // 목적지 검색을위한
+
+    fun fetchCurrentLocation() {
+        poiSearchViewModel.updateState(StartingSearch) // 👈 여기가 핵심
+    }
 
 
 
