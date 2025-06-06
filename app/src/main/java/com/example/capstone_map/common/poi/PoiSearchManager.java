@@ -1,4 +1,4 @@
-package com.example.capstone_map.poi;
+package com.example.capstone_map.common.poi;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -61,15 +61,8 @@ public class PoiSearchManager {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful() && response.body() != null) {
-                            String json = response.body().string();
-
-                            try {
-                                List<Poi> poiList = PoiParsingManager.parse(json);  //  여기서 파싱
-                                mainHandler.post(() -> callback.onSuccess(poiList)); //  파싱된 결과 전달
-                            } catch (Exception e) {
-                                mainHandler.post(() -> callback.onFailure("파싱 오류: " + e.getMessage()));
-                            }
-
+                            String geoJson = response.body().string();
+                            mainHandler.post(() -> callback.onSuccess(geoJson));
                         } else {
                             mainHandler.post(() -> callback.onFailure("응답 오류: " + response.code()));
                         }
