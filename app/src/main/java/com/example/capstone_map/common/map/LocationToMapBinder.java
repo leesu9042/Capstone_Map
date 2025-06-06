@@ -1,4 +1,4 @@
-package com.example.capstone_map.map;
+package com.example.capstone_map.common.map;
 
 
 
@@ -6,8 +6,8 @@ import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
-import com.example.capstone_map.location.LocationTracker;
-import com.example.capstone_map.location.LocationUpdateCallback;
+import com.example.capstone_map.common.location.LocationTracker;
+import com.example.capstone_map.common.location.LocationUpdateCallback;
 import com.skt.Tmap.TMapPoint;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapView;

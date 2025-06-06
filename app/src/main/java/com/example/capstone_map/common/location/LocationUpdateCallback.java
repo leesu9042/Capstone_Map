@@ -1,4 +1,4 @@
-package com.example.capstone_map.location;
+package com.example.capstone_map.common.location;
 
 import android.location.Location;
 

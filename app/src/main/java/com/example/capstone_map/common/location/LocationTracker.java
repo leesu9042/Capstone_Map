@@ -1,5 +1,5 @@
 // LocationTracker.java
-package com.example.capstone_map.location;
+package com.example.capstone_map.common.location;
 
 import android.Manifest;
 import android.content.Context;
