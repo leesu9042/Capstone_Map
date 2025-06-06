@@ -197,8 +197,8 @@
 //                ttsManager.speak("음성 인식 중 오류가 발생했습니다");
 //            }
 //        });
-//
-//
+
+
 //        // ✅ 3. 버튼 클릭 시 음성 인식 시작
 //        sttButton.setOnClickListener(v -> {
 //            //ttsManager.speak("듣고 있습니다");
