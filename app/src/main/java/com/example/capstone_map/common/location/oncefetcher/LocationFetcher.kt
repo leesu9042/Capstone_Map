@@ -1,4 +1,4 @@
-package com.example.capstone_map.common.location
+package com.example.capstone_map.common.location.oncefetcher
 
 
 import android.Manifest

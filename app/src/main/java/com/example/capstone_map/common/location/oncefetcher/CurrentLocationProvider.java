@@ -1,10 +1,11 @@
-package com.example.capstone_map.common.location;
+package com.example.capstone_map.common.location.oncefetcher;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
+import com.example.capstone_map.common.location.LocationResultListener;
 import com.google.android.gms.location.LocationRequest;
 
 import android.os.Looper;
