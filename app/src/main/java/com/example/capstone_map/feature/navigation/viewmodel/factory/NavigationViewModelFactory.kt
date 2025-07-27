@@ -1,22 +1,20 @@
-package com.example.capstone_map.feature.poisearch.viewmodel.factory
+package com.example.capstone_map.feature.navigation.viewmodel.factory
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.capstone_map.feature.poisearch.viewmodel.POISearchViewModel
-import com.example.capstone_map.common.location.oncefetcher.LocationFetcher
 import com.example.capstone_map.common.viewmodel.NavigationStateViewModel
 import com.example.capstone_map.common.voice.STTManager
 import com.example.capstone_map.common.voice.TTSManager
 import com.example.capstone_map.feature.navigation.viewmodel.NavigationViewModel
 
-class POISearchViewModelFactory(
+class NavigationViewModelFactory(
+    private val context: Context,
     private val stateViewModel: NavigationStateViewModel,
-    private val navigationViewModel : NavigationViewModel,
-    private val locationFetcher: LocationFetcher,
     private val ttsManager: TTSManager,
     private val sttManager: STTManager
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return POISearchViewModel(stateViewModel,navigationViewModel,locationFetcher,ttsManager,sttManager) as T
+        return NavigationViewModel(context, stateViewModel, ttsManager, sttManager) as T
     }
 }

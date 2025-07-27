@@ -1,5 +1,5 @@
 // LocationTracker.java
-package com.example.capstone_map.common.location;
+package com.example.capstone_map.common.location.tracker;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
+
+import com.example.capstone_map.common.location.PermissionChecker;
 
 public class LocationTracker implements LocationListener { //LocationListener를통해 위치가 변경되면 자동으로 알림받을 수 있다
     //LocationListener는 안드로이드에서 제공하는 인터페이스로,
@@ -74,7 +76,7 @@ public class LocationTracker implements LocationListener { //LocationListener를
         * 설정한 간격(2초, 1m 이상 움직임)에 따라 onLocationChanged()가 호출됩니다.
         *
         * “GPS 쓰고 싶고요,
-        * 2초마다 또는 1m 이상 움직이면 알려주세요!
+        * 1초마다 또는 1m 이상 움직이면 알려주세요!
         * 알려줄 땐 이 클래스(this)의 onLocationChanged()를 자동으로 호출해주세요~”
        * */
 

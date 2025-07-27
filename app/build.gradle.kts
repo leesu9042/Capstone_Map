@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android") version "1.9.0"
+    kotlin("plugin.serialization") version "1.9.0" // 코틀린 버전에 맞춰서
+
 
 }
 
@@ -50,6 +52,7 @@ dependencies {
     // ViewModel + LiveData + lifecycle
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.activity:activity-ktx:1.7.2") // ← 이것이 핵심!
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
